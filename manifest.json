@@ -1,0 +1,12 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "RoomEasy",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "RoomEasy",
+  "start_url": "/",
+  "theme_color": "#ffffff",
+  "description": "RoomEasy Is a room finder application for the college students in nagpur."
+}
