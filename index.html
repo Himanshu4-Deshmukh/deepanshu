@@ -482,5 +482,44 @@
   }
 </script>
 
+    <script>
+        // Service Worker registration
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').then(function (registration) {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }).catch(function (error) {
+        console.log('ServiceWorker registration failed: ', error);
+    });
+}
+
+// Handle the beforeinstallprompt event
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault(); // Prevent the mini-infobar from appearing on mobile
+    deferredPrompt = e; // Stash the event so it can be triggered later
+    showInstallPromotion(); // Show custom install promotion
+});
+
+function showInstallPromotion() {
+    const installBanner = document.getElementById('install-banner');
+    installBanner.style.display = 'block';
+
+    document.getElementById('install-button').addEventListener('click', () => {
+        installBanner.style.display = 'none'; // Hide the install promotion
+        deferredPrompt.prompt(); // Show the install prompt
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('User accepted the A2HS prompt');
+            } else {
+                console.log('User dismissed the A2HS prompt');
+            }
+            deferredPrompt = null;
+        });
+    });
+}
+
+    </script>
+
 </body>
 </html>
