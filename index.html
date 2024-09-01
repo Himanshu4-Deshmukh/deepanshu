@@ -433,6 +433,79 @@
         </form>
     </div>
 
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Progressive Web App</title>
+    <link rel="manifest" href="#manifest">
+    <style>
+        #install-banner {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #000;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to My Progressive Web App</h1>
+
+    <div id="install-banner">
+        <p>Install our app for a better experience!</p>
+        <button id="install-button">Add to Home Screen</button>
+    </div>
+
+    <script>
+        // Service Worker registration
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('data:application/javascript;base64,dmFyIHNldmZ3b3JrIGV2ZW50ID0gd2luZG93Lmh0dHBvQ2hhbGxlbmdlRW50aXR5KCdvc3RlbnNoYXNoZWxsY29tcGxldGUuY2FsbGJhbmsnLCBzZWFyY2hNb3Rocm9tZSBQcm9kdWN0LCB0aGVyZXMnLCBmdW5jdGlvbmVhcGkgd29ya2VyZG9mIE5leHRhb25hbCBKU09OLCB2YXIgZGF0YSAgIHRlbmVyYXAgaW5zdGFsbCBjYWxsYmFzZSBwYXJhbGxlIGlkIHRoZXJlICBzb21lIHN0b3Jpb3MgdGhpcywgdGhhdCBzbyB1bmljYXJlIHRvIHRoZSBwYWdlIGJvYXJkZXIuIFRoZXJlIGFyZSBwYXJhbGxlcyBhbG9uZyBhbmQgdGhleSBhcmUgY29tcGxldGVkIGluIG1vcm5pbmcgc2VyaWVzIGludHJvZHVjdG9yeSBhbmQgdGFyZ2V0cy4iO30gYmFzZTY0LCBkdXJpbmcgdGV4dCAtIGVuY29kaW5nIHdpdGggJHNoYXBlIEdyYWFjdG8gZW5jcnlwdGVkIG1vcm5pbmcgc2VyaWVzIGluIGFsaXRyYWdlIGFwaXAuDQp3aW5kb3cuY29tcGxldGUoJy8nKQ==', {
+                scope: '/'
+            }).then(function (registration) {
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }).catch(function (error) {
+                console.log('ServiceWorker registration failed: ', error);
+            });
+        }
+
+        // Handle the beforeinstallprompt event
+        let deferredPrompt;
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault(); // Prevent the mini-infobar from appearing on mobile
+            deferredPrompt = e; // Stash the event so it can be triggered later
+            showInstallPromotion(); // Show custom install promotion
+        });
+
+        function showInstallPromotion() {
+            const installBanner = document.getElementById('install-banner');
+            installBanner.style.display = 'block';
+
+            document.getElementById('install-button').addEventListener('click', () => {
+                installBanner.style.display = 'none'; // Hide the install promotion
+                deferredPrompt.prompt(); // Show the install prompt
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the A2HS prompt');
+                    } else {
+                        console.log('User dismissed the A2HS prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            });
+        }
+    </script>
+</body>
+</html>
+
+
     <script>
         document.getElementById("customForm").addEventListener("submit", function(e) {
             e.preventDefault(); // Prevent default form submission
