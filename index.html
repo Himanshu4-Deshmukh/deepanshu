@@ -30,16 +30,54 @@
             z-index: 1000;
         }
     </style>
+    <style>
+    fieldset {
+        margin-top: 1.5rem;
+        padding: 1rem;
+        border: 1px solid #D1D5DB; /* gray-300 */
+        border-radius: 0.5rem; /* rounded-lg */
+    }
+
+    legend {
+        font-size: 1.125rem; /* text-lg */
+        font-weight: 600; /* font-semibold */
+        color: #1F2937; /* text-gray-800 */
+        margin-bottom: 1rem;
+    }
+
+    .radio-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .radio-group input[type="radio"] {
+        width: 1rem; /* 16px */
+        height: 1rem; /* 16px */
+        border: 1px solid #D1D5DB; /* border-gray-300 */
+        color: #3B82F6; /* text-blue-600 */
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+    .radio-group input[type="radio"]:focus {
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* focus:ring-blue-500 */
+    }
+
+    .radio-group label {
+        margin-left: 0.75rem; /* ml-3 */
+        color: #4B5563; /* text-gray-700 */
+        font-size: 0.875rem; /* text-sm */
+    }
+
+    .radio-group {
+        margin-bottom: 1rem; /* space-y-4 equivalent */
+    }
+</style>
+
 </head>
 <body>
-    <h1>Welcome to My Progressive Web App</h1>
-
-    <div id="install-banner">
-        <p>Install our app for a better experience!</p>
-        <button id="install-button">Add to Home Screen</button>
-    </div>
-
-    <script src="app.js"></script>
+ 
 </body>
 </html>
 
